@@ -21,7 +21,7 @@ Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 
 ### 1. Clone o repositório
 
-* git clone [https://github.com/paulorvidal/madatech_tasks.git]
+* git clone [https://github.com/paulorvidal/madatech-tasks.git]
 * cd madatech-tasks
 
 ### 2. Instale as dependências
