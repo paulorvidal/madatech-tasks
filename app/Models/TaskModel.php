@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace app\Models;
+namespace App\Models;
 use CodeIgniter\Model;
 
 class TaskModel extends Model
 {
+    // Mapeamento da Tabela
     protected $table = 'tasks';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
 
     protected $returnType = 'array';
-    protected $allowedField = ['title', 'description', 'status'];
+    protected $allowedFields = ['title', 'description', 'status'];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
