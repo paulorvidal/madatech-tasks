@@ -1,69 +1,56 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Gerenciamento de Tarefas - Madatech
 
-## What is CodeIgniter?
+Este é um projeto de teste técnico para a vaga de desenvolvedor na Madatech. O sistema consiste em um CRUD completo de tarefas, focado em código limpo, separação de responsabilidades (MVC) e integridade de dados.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+##  Tecnologias Utilizadas
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+* **Framework:** CodeIgniter 4 (PHP 8+)
+* **Banco de Dados:** PostgreSQL
+* **Padrões e Arquitetura:** MVC, Active Record, Migrations, Validação nativa de Models, Clean Code.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+##  Pré-requisitos
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+Para rodar este projeto localmente, você precisará ter instalado na sua máquina:
+* PHP 8.1 ou superior (com extensões `intl`, `mbstring` e `pgsql` habilitadas).
+* Composer.
+* PostgreSQL.
 
-## Installation & updates
+##  Como Executar o Projeto
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### 1. Clone o repositório
 
-## Setup
+* git clone [https://github.com/paulorvidal/madatech_tasks.git]
+* cd madatech-tasks
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### 2. Instale as dependências
 
-## Important Change with index.php
+* composer install
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### 3. Configuração do Banco de Dados
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+* Crie um banco de dados vazio no seu servidor PostgreSQL chamado madatech_db.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 4. Configuração do Ambiente (.env)
+* Na raiz do projeto, renomeie o arquivo env para .env (ou faça uma cópia). Abra o arquivo .env e configure as credenciais do banco de dados na seção DATABASE:
 
-## Repository Management
+CI_ENVIRONMENT = development
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+database.default.hostname = localhost
+database.default.database = madatech_db
+database.default.username = postgres
+database.default.password = sua_senha_aqui
+database.default.DBDriver = Postgre
+database.default.port     = 5432
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### 5. Executar as Migrations
+* Com o banco configurado, rode o comando abaixo para criar a tabela de tarefas automaticamente.
+(Nota arquitetural: Foi implementada uma constraint CHECK direto na migration para garantir a integridade do status diretamente no SGBD PostgreSQL, impedindo inserções inválidas mesmo fora da aplicação).
 
-## Server Requirements
+* php spark migrate
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+### 6. Iniciar o Servidor
+* Inicie o servidor de desenvolvimento embutido do CodeIgniter:
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+* php spark serve
