@@ -101,3 +101,32 @@ O `TaskController` atua estritamente como orquestrador do fluxo HTTP, recebendo 
 * **create():** Captura os dados POST e tenta a inserção. Em caso de falha de validação do Model, utiliza `redirect()->back()->withInput()` para retornar à tela anterior preservando os dados digitados e exibindo os erros.
 * **update():** Utiliza `$this->request->getRawInput()` para processar dados vindos de simulações HTTP PUT (Method Spoofing).
 * **delete():** Remove fisicamente o registro do banco de dados via `$this->taskModel->delete($id)` após confirmar sua existência prévia.
+
+# Documentação: View de Listagem (tasks/index.php)
+
+A view `index.php` atua como o painel principal do sistema, responsável por listar todas as tarefas e centralizar a navegação, utilizando os componentes visuais do Bootstrap 5.
+
+## Componentes e Decisões Técnicas
+* **Tabela de Dados (Bootstrap):** Utiliza as classes `.table`, `.table-hover` e `.align-middle` para apresentar as informações do banco de dados de forma limpa e responsiva.
+* **Indicadores Visuais (Badges):** O status da tarefa aplica classes semânticas do Bootstrap (`bg-success`, `bg-warning`, `bg-secondary`) via operador ternário, facilitando a identificação imediata do progresso da tarefa.
+* **Feedback do Sistema:** Captura e exibe mensagens da sessão via `session()->getFlashdata('success')` quando ações de criação, edição ou exclusão são bem-sucedidas.
+* **Segurança na Exclusão (CSRF):** A exclusão não é feita por um link direto (tag `<a>`), mas sim por um formulário oculto contendo `csrf_field()` e `_method="DELETE"`, garantindo proteção contra falsificação de solicitações HTTP.
+
+# Documentação: View de Cadastro (tasks/create.php)
+
+A view `create.php` fornece a interface para a entrada de novas tarefas, com foco em usabilidade e validação de dados.
+
+## Componentes e Decisões Técnicas
+* **Layout Estruturado:** O formulário está encapsulado em um `.card` do Bootstrap centralizado na tela, proporcionando uma experiência de usuário focada.
+* **Exibição de Erros de Validação:** Intercepta as falhas de validação geradas pelo `TaskModel` e redirecionadas pelo Controller (`session()->getFlashdata('errors')`), renderizando-as em um bloco de alerta (`.alert-danger`) no topo do formulário.
+* **Preservação de Estado (UX):** Utiliza a função auxiliar `old('campo')` do CodeIgniter em todos os inputs. Se a validação falhar, o usuário não perde os textos longos que já havia digitado na descrição ou no título.
+* **Proteção de Submissão:** A tag `<?= csrf_field() ?>` foi injetada nativamente para blindar o endpoint POST contra ataques de origem cruzada.
+
+# Documentação: View de Edição (tasks/edit.php)
+
+A view `edit.php` espelha o design do formulário de criação, mas sua lógica interna é adaptada para o fluxo de atualização RESTful.
+
+## Componentes e Decisões Técnicas
+* **Method Spoofing (PUT):** Como navegadores padrão suportam apenas requisições GET e POST em formulários HTML, foi incluído o input oculto `<input type="hidden" name="_method" value="PUT">`. Isso permite que o CodeIgniter interprete a requisição corretamente para atualizar o registro.
+* **Preenchimento Dinâmico (Two-Way Fallback):** Os campos do formulário combinam os dados atuais do banco de dados com a retenção de estado de erros. A função `old('title', $task['title'])` garante que o input mostre o valor original da tarefa, mas dê prioridade ao valor recém-digitado caso a tentativa de atualização falhe nas validações.
+* **Padronização de Opções:** O campo `<select>` do status avalia o valor retornado do banco (`$task['status']`) para inserir dinamicamente o atributo `selected` na opção correta, respeitando a integridade das regras de negócio ("pendente", "em andamento" ou "concluída").
