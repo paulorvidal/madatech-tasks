@@ -10,3 +10,11 @@ $routes->group('tasks', function ($routes) {
     $routes->put('(:num)', 'TaskController::update/$1');    // Processar a atualização 
     $routes->delete('(:num)', 'TaskController::delete/$1'); // Processar a exclusão
 });
+
+//rotas para a API REST
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+    $routes->resource('tasks', [
+        'controller' => 'TaskApiController',
+        'only' => ['index', 'show', 'create', 'update', 'delete']
+    ]);
+});
