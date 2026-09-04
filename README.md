@@ -41,14 +41,14 @@ Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 ### 4. Configuração do Ambiente (.env)
 * Na raiz do projeto, renomeie o arquivo env para .env (ou faça uma cópia). Abra o arquivo .env e configure as credenciais do banco de dados na seção DATABASE:
 
-`CI_ENVIRONMENT = development`
+* `CI_ENVIRONMENT = development`
 
-`database.default.hostname = localhost`
-`database.default.database = madatech_db`
-`database.default.username = postgres`
-`database.default.password = sua_senha_aqui`
-`database.default.DBDriver = Postgre`
-`database.default.port     = 5432`
+* `database.default.hostname = localhost`
+* `database.default.database = madatech_db`
+* `database.default.username = postgres`
+* `database.default.password = sua_senha_aqui`
+* `database.default.DBDriver = Postgre`
+* `database.default.port     = 5432`
 
 ### 5. Executar as Migrations
 * Com o banco configurado, rode o comando abaixo para criar a tabela de tarefas automaticamente.
@@ -59,7 +59,7 @@ Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 ### 6. Iniciar o Servidor
 * Inicie o servidor de desenvolvimento embutido do CodeIgniter:
 
-`php spark serve`
+* `php spark serve`
 
 ## Testes Unitários
 
@@ -69,7 +69,7 @@ Para executar
 1. Certifique-se de que a extensão `sqlite3` está habilitada no seu `php.ini` (o CodeIgniter utiliza um banco SQLite em memória para testes, sem afetar o banco principal).
 2. Na raiz do projeto, execute o comando:
 
-`composer test`
+* `composer test`
 
 ## API REST (Bônus)
 
