@@ -37,6 +37,7 @@ Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 ### 3. Configuração do Banco de Dados
 
 * Crie um banco de dados vazio no seu servidor PostgreSQL chamado madatech_db.
+* `createdb -U postgres madatech_db`
 
 ### 4. Configuração do Ambiente (.env)
 * Na raiz do projeto, renomeie o arquivo env para .env (ou faça uma cópia). Abra o arquivo .env e configure as credenciais do banco de dados na seção DATABASE:
