@@ -11,7 +11,13 @@ Este é um projeto de teste técnico para a vaga de desenvolvedor na Madatech. O
 ##  Pré-requisitos
 
 Para rodar este projeto localmente, você precisará ter instalado na sua máquina:
-* PHP 8.1 ou superior (com extensões `intl`, `mbstring` e `pgsql` habilitadas).
+* PHP 8.1 ou superior (
+    * `extension=intl`
+    * `extension=mbstring`
+    * `extension=pgsql`
+    * `extension=pdo_pgsql`
+    * `extension=sqlite3`
+).
 * Composer.
 * PostgreSQL.
 
@@ -21,7 +27,7 @@ Siga o passo a passo abaixo para configurar o ambiente de desenvolvimento:
 
 ### 1. Clone o repositório
 
-* git clone [https://github.com/paulorvidal/madatech_tasks.git]
+* git clone [https://github.com/paulorvidal/madatech-tasks.git]
 * cd madatech-tasks
 
 ### 2. Instale as dependências
@@ -54,3 +60,26 @@ database.default.port     = 5432
 * Inicie o servidor de desenvolvimento embutido do CodeIgniter:
 
 * php spark serve
+
+## Testes Unitários
+
+O projeto utiliza o **PHPUnit** nativamente integrado ao CodeIgniter 4.
+
+Para executar
+1. Certifique-se de que a extensão `sqlite3` está habilitada no seu `php.ini` (o CodeIgniter utiliza um banco SQLite em memória para testes, sem afetar o banco principal).
+2. Na raiz do projeto, execute o comando:
+
+composer test
+
+## API REST 
+
+O sistema disponibiliza rotas RESTful para consumo externo. Você pode testá-las em ferramentas como Postman ou Insomnia  
+* `http://localhost:8080`
+
+* **GET `/api/tasks`** - Retorna a lista de todas as tarefas.
+* **GET `/api/tasks/{id}`** - Retorna os detalhes de uma tarefa específica.
+* **POST `/api/tasks`** - Cria uma nova tarefa.
+  * JSON: `{"title": "...", "description": "...", "status": "pendente"}`
+* **PUT `/api/tasks/{id}`** - Atualiza os dados de uma tarefa.
+  * JSON: `{"title": "...", "description": "...", "status": "concluída"}`
+* **DELETE `/api/tasks/{id}`** - Remove a tarefa do banco de dados.
